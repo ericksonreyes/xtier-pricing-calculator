@@ -1,0 +1,7 @@
+formatter.name: pretty
+stop_on_failure: true
+
+suites:
+  default:
+    namespace: 'EricksonReyes'
+    src_path: '%paths.config%/src'

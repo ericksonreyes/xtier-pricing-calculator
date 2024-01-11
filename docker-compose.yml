@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  composer:
+    build:
+      context: .
+      dockerfile: docker/composer.Dockerfile
+    volumes:
+      - './:/var/www/html:delegated'
+      - 'composer_cache:/tmp'
+    tty: true
+    network_mode: host
+    container_name: 'xtier-pricing-calculator-composer'
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    volumes:
+      - './:/var/www/html:delegated'
+    tty: true
+    network_mode: host
+    container_name: 'xtier-pricing-calculator-php'
+
+  php7:
+    build:
+      context: .
+      dockerfile: docker/php7.Dockerfile
+    volumes:
+      - './:/var/www/html:delegated'
+    tty: true
+    network_mode: host
+    container_name: 'xtier-pricing-calculator-php7'
+
+  php8:
+    build:
+      context: .
+      dockerfile: docker/php8.Dockerfile
+    volumes:
+      - './:/var/www/html:delegated'
+    tty: true
+    network_mode: host
+    container_name: 'xtier-pricing-calculator-php8'
+
+volumes:
+  composer_cache:
+  npm_cache:
