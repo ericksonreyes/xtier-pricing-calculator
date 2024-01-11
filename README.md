@@ -1,7 +1,12 @@
 # Tier Pricing Calculator
 
+## Requirement
+* PHP 5.6 to PHP 8
+
 ## Installation
-* composer install
+```shell
+composer install
+```
 
 ## Usage
 
@@ -40,5 +45,10 @@ foreach ($result->breakdown() as $resultItem) {
 echo "\nTotal billable price: "$result->total();
 ```
 
-### Adding test scenarios
+### Adding acceptance test scenarios
 Add new scenarios in the [tier-pricing-calculator.feature](features/tier-pricing-calculator.feature)
+
+### Running the acceptance test scenarios
+```shell
+php vendor/bin/behat
+```
