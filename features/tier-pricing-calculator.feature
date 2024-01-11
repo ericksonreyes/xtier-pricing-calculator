@@ -3,6 +3,8 @@ Feature: Tier Pricing Calculator
   I want a tier pricing calculator
   So that I will be able to compute the amount to be billed using a volume based tier pricing
 
+
+
   Scenario Outline: Orders delivered is less than 100
     Given I have the following tier pricing
       | min_volume | max_volume | price |
@@ -15,6 +17,8 @@ Feature: Tier Pricing Calculator
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
       | 1             | 197         | 197             | 1970.00   | 1970.00      |
+
+
 
   Scenario Outline: Orders delivered is less than 1000
     Given I have the following tier pricing
@@ -31,6 +35,8 @@ Feature: Tier Pricing Calculator
       | 1             | 100         | 100             | 1000.00   | 1000.00      |
       | 101           | 970         | 870             | 4350.00   | 5350.00      |
 
+
+
   Scenario Outline: Orders delivered is less than 10000
     Given I have the following tier pricing
       | min_volume | max_volume | price |
@@ -45,6 +51,8 @@ Feature: Tier Pricing Calculator
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
       | 1             | 100         | 100             | 1000.00   | 1000.00      |
       | 101           | 2970        | 2870            | 14350.00  | 15350.00     |
+
+
 
   Scenario Outline: Orders delivered is less than 10000. 3 Tier
     Given I have the following tier pricing
@@ -63,6 +71,8 @@ Feature: Tier Pricing Calculator
       | 101           | 1000        | 900             | 4500.00   | 5500.00      |
       | 1001          | 2970        | 1970            | 4925.00   | 10425.00     |
 
+
+    
   Scenario Outline: Orders delivered is greater than 10000. 4 Tier
     Given I have the following tier pricing
       | min_volume | max_volume | price |
