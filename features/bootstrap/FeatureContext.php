@@ -52,9 +52,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given the volume is :arg1
+     * @Given there are :arg1 orders delivered
      */
-    public function theVolumeIs($volume)
+    public function thereAreOrdersDelivered($volume)
     {
         $this->volume = $volume;
     }
@@ -76,6 +76,8 @@ class FeatureContext implements Context
     {
         $breakdown = $this->result->breakdown();
 
+        $showDebug = true;
+        $mismatches = [];
         $hasMatch = false;
         foreach ($breakdown as $item) {
             if (
@@ -86,7 +88,19 @@ class FeatureContext implements Context
                 $item->runningCost() === floatval($runningCost)
             ) {
                 $hasMatch = true;
+            } else {
+                $mismatches[] = [
+                    'actual billingStart: '. $item->billingStart() => 'expected ' . intval($billingStart),
+                    'actual billingEnd: '. $item->billingEnd() => 'expected ' . intval($billingEnd),
+                    'actual billableQuantity: '. $item->count() => 'expected ' . intval($count),
+                    'actual price: '. $item->price() => 'expected ' . floatval($price),
+                    'actual runningCost: '. $item->runningCost() => 'expected ' . floatval($runningCost)
+                ];
             }
+        }
+
+        if ($showDebug === true && empty($mismatches) === false && $hasMatch === false) {
+            print_r($mismatches);
         }
         assert($hasMatch === true, "Tier item not found.");
     }

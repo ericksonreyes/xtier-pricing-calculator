@@ -11,8 +11,8 @@ interface XTierPricingCalculatorInterface
 {
 
     /**
-     * @param int $quantity
+     * @param int $numberOfItemsDelivered
      * @return \EricksonReyes\XTierPricingCalculator\XTierPricingCalculatorResultInterface
      */
-    public function compute($quantity = 0);
+    public function compute($numberOfItemsDelivered = 0);
 }
