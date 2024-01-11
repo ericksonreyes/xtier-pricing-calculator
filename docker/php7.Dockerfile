@@ -1,4 +1,4 @@
-FROM php:5.6.40
+FROM php:7.0.33
 
 RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list
 
