@@ -43,9 +43,13 @@ class FeatureContext implements Context
         $tiers = $table->getHash();
 
         foreach ($tiers as $tier) {
+            $max = floatval($tier['max_volume']);
+            if ($max === 0) {
+                $max = null;
+            }
             $this->tiers[] = new XTier(
                 intval($tier['min_volume']),
-                intval($tier['max_volume']),
+                $max,
                 floatval($tier['price'])
             );
         }
@@ -76,7 +80,7 @@ class FeatureContext implements Context
     {
         $breakdown = $this->result->breakdown();
 
-        $showDebug = true;
+        $showDebug = false;
         $mismatches = [];
         $hasMatch = false;
         foreach ($breakdown as $item) {
@@ -90,21 +94,14 @@ class FeatureContext implements Context
                 $hasMatch = true;
             } else {
                 if ($item->billingStart() === intval($billingStart)) {
-                    $mismatches[] = [
+                    $mismatches[] = array(
                         'Expected billingStart: ' . intval($billingStart) => 'Actual: ' . $item->billingStart(),
                         'Expected billingEnd: ' . intval($billingEnd) => 'Actual: ' . $item->billingEnd(),
                         'Expected numberOfBillableOrders: ' . intval($count) => 'Actual: ' . $item->count(),
                         'Expected price: ' . floatval($price) => 'Actual: ' . $item->price(),
                         'Expected runningCost: ' . floatval($runningCost) => 'Actual: ' . $item->runningCost()
-                    ];
+                    );
                 }
-                $mismatches[] = [
-                    'Expected billingStart: ' . intval($billingStart) => 'Actual: ' . $item->billingStart(),
-                    'Expected billingEnd: ' . intval($billingEnd) => 'Actual: ' . $item->billingEnd(),
-                    'Expected numberOfBillableOrders: ' . intval($count) => 'Actual: ' . $item->count(),
-                    'Expected price: ' . floatval($price) => 'Actual: ' . $item->price(),
-                    'Expected runningCost: ' . floatval($runningCost) => 'Actual: ' . $item->runningCost()
-                ];
             }
         }
 
@@ -113,5 +110,14 @@ class FeatureContext implements Context
         }
         assert($hasMatch === true, "Tier item not found.");
     }
+
+    /**
+     * @Then the total billable price is :arg1
+     */
+    public function theTotalBillablePriceIs($expectedBillablePrice)
+    {
+        assert($this->result->total() === floatval($expectedBillablePrice));
+    }
+
 
 }

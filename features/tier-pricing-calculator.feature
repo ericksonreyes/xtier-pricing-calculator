@@ -10,6 +10,7 @@ Feature: Tier Pricing Calculator
     And there are 197 orders delivered
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
+    And the total billable price is 1970.00
 
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
@@ -23,6 +24,7 @@ Feature: Tier Pricing Calculator
     And there are 970 orders delivered
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
+    And the total billable price is 5350.00
 
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
@@ -37,6 +39,7 @@ Feature: Tier Pricing Calculator
     And there are 2970 orders delivered
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
+    And the total billable price is 15350.00
 
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
@@ -52,6 +55,7 @@ Feature: Tier Pricing Calculator
     And there are 2970 orders delivered
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
+    And the total billable price is 10425.00
 
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
@@ -69,6 +73,7 @@ Feature: Tier Pricing Calculator
     And there are 12970 orders delivered
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
+    And the total billable price is 32455.00
 
     Examples:
       | billing_start | billing_end | billable_orders | tier_cost | running_cost |
