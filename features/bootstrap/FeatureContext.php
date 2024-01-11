@@ -89,12 +89,21 @@ class FeatureContext implements Context
             ) {
                 $hasMatch = true;
             } else {
+                if ($item->billingStart() === intval($billingStart)) {
+                    $mismatches[] = [
+                        'Expected billingStart: ' . intval($billingStart) => 'Actual: ' . $item->billingStart(),
+                        'Expected billingEnd: ' . intval($billingEnd) => 'Actual: ' . $item->billingEnd(),
+                        'Expected numberOfBillableOrders: ' . intval($count) => 'Actual: ' . $item->count(),
+                        'Expected price: ' . floatval($price) => 'Actual: ' . $item->price(),
+                        'Expected runningCost: ' . floatval($runningCost) => 'Actual: ' . $item->runningCost()
+                    ];
+                }
                 $mismatches[] = [
-                    'actual billingStart: '. $item->billingStart() => 'expected ' . intval($billingStart),
-                    'actual billingEnd: '. $item->billingEnd() => 'expected ' . intval($billingEnd),
-                    'actual billableQuantity: '. $item->count() => 'expected ' . intval($count),
-                    'actual price: '. $item->price() => 'expected ' . floatval($price),
-                    'actual runningCost: '. $item->runningCost() => 'expected ' . floatval($runningCost)
+                    'Expected billingStart: ' . intval($billingStart) => 'Actual: ' . $item->billingStart(),
+                    'Expected billingEnd: ' . intval($billingEnd) => 'Actual: ' . $item->billingEnd(),
+                    'Expected numberOfBillableOrders: ' . intval($count) => 'Actual: ' . $item->count(),
+                    'Expected price: ' . floatval($price) => 'Actual: ' . $item->price(),
+                    'Expected runningCost: ' . floatval($runningCost) => 'Actual: ' . $item->runningCost()
                 ];
             }
         }
