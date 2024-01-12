@@ -30,6 +30,10 @@ foreach ($matrix as $tier) {
 // Instantiate pricing calculator
 $calculator = new \EricksonReyes\XTierPricingCalculator\XTierPricingCalculator($tiers);
 
+// Do some DB query or any method of extracting item count.
+$query = $db->query("SELECT COUNT(`id`) as 'order_count' FROM `orders` WHERE `seller_id` = 1");
+$itemCount = intval($query['order_count']);
+
 // Compute the tier pricing
 $result = $calculator->compute($this->volume);
 

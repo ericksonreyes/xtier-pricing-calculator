@@ -56,9 +56,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given there are :arg1 orders delivered
+     * @Given there are :arg1 orders
      */
-    public function thereAreOrdersDelivered($volume)
+    public function thereAreOrders($volume)
     {
         $this->volume = $volume;
     }

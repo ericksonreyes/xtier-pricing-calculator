@@ -29,33 +29,39 @@ class XTierPricingCalculator implements XTierPricingCalculatorInterface
     }
 
     /**
-     * @param int $numberOfOrdersDelivered
+     * @param int $numberOfOrders
      * @return \EricksonReyes\XTierPricingCalculator\XTierPricingCalculatorResultInterface
      */
-    public function compute($numberOfOrdersDelivered = 0)
+    public function compute($numberOfOrders = 0)
     {
-        $numberOfOrdersDelivered = intval($numberOfOrdersDelivered);
+        // Let's just make sure the number of orders will be an integer.
+        $numberOfOrders = intval($numberOfOrders);
+
+        // Create an instance of XTierPricingCalculatorResult
         $result = new XTierPricingCalculatorResult();
-        if ($numberOfOrdersDelivered < 0) {
+
+        // If there are no orders no need to proceed.
+        if ($numberOfOrders < 0) {
             return $result;
         }
 
-        $numberOfRemainingUnbilledOrders = intval($numberOfOrdersDelivered);
+        // Set the number of remaining unbilled orders. Since all of orders at this moment are all assumed unbilled.
+        $numberOfRemainingUnbilledOrders = intval($numberOfOrders);
         $billingStartIndex = 0;
         $runningCost = 0.00;
 
         // Loop though the tiers
         foreach ($this->tiers as $tier) {
 
-            // Get maximum billable quantity based on the tier settings
+            // Get maximum billable quantity based on the tier settings.
             $maximumNumberOfBillableOrders = abs($billingStartIndex - intval($tier->max()));
 
-            // Determine if the tier has no upper bound limit
+            // Determine if the tier has no upper bound limit.
             $hasNoUpperBoundLimit = intval($tier->max()) === 0;
 
-            // If there is no maximum billable quantity set, use the  number of orders delivered.
+            // If there is no maximum billable quantity set, use the  number of orders.
             if ($hasNoUpperBoundLimit) {
-                $maximumNumberOfBillableOrders = $numberOfOrdersDelivered;
+                $maximumNumberOfBillableOrders = $numberOfOrders;
             }
 
             // Set default billable quantity based on the remaining un-billed orders minus the previously
@@ -67,15 +73,15 @@ class XTierPricingCalculator implements XTierPricingCalculatorInterface
                 $numberOfBillableOrders = $maximumNumberOfBillableOrders;
             }
 
-            // Compute where billing will start
+            // Compute where billing will start.
             $billingStart = $billingStartIndex + 1;
 
-            // Compute where the billing will stop
+            // Compute where the billing will stop.
             $billingEnd = $billingStartIndex + $numberOfBillableOrders;
 
-            // If the tier has no upper bound limit, set billing end to the number of orders delivered.
+            // If the tier has no upper bound limit, set billing end to the number of orders.
             if ($hasNoUpperBoundLimit) {
-                $billingEnd = $numberOfOrdersDelivered;
+                $billingEnd = $numberOfOrders;
             }
 
             // Compute the amount to be billed.
@@ -97,7 +103,7 @@ class XTierPricingCalculator implements XTierPricingCalculatorInterface
             // Subtract the billed orders from the remaining unbilled orders.
             $numberOfRemainingUnbilledOrders = $numberOfRemainingUnbilledOrders - $numberOfBillableOrders;
 
-            // Set tne next start index
+            // Use the billing end as the next starting billing index for continuity.
             $billingStartIndex = $billingEnd;
 
             if ($numberOfRemainingUnbilledOrders <= 0) {
@@ -106,6 +112,7 @@ class XTierPricingCalculator implements XTierPricingCalculatorInterface
 
         }
 
+        // Return the result object.
         return $result;
     }
 

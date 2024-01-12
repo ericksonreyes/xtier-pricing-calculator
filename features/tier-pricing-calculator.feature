@@ -5,11 +5,11 @@ Feature: Tier Pricing Calculator
 
 
 
-  Scenario Outline: Orders delivered is less than 100
+  Scenario Outline: Orders are less than 100. One tier with no max count limit.
     Given I have the following tier pricing
       | min_volume | max_volume | price |
       | 1          |            | 10.00 |
-    And there are 197 orders delivered
+    And there are 197 orders
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
     And the total billable price is 1970.00
@@ -20,12 +20,12 @@ Feature: Tier Pricing Calculator
 
 
 
-  Scenario Outline: Orders delivered is less than 1000
+  Scenario Outline: Orders are less than 1000. Two tiers with the last tier with no max count limit.
     Given I have the following tier pricing
       | min_volume | max_volume | price |
       | 1          | 100        | 10.00 |
       | 101        |            | 5.00  |
-    And there are 970 orders delivered
+    And there are 970 orders
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
     And the total billable price is 5350.00
@@ -37,12 +37,12 @@ Feature: Tier Pricing Calculator
 
 
 
-  Scenario Outline: Orders delivered is less than 10000
+  Scenario Outline: Orders are less than 10000. Two tiers with the last tier with no max count limit.
     Given I have the following tier pricing
       | min_volume | max_volume | price |
       | 1          | 100        | 10.00 |
       | 101        |            | 5.00  |
-    And there are 2970 orders delivered
+    And there are 2970 orders
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
     And the total billable price is 15350.00
@@ -54,13 +54,13 @@ Feature: Tier Pricing Calculator
 
 
 
-  Scenario Outline: Orders delivered is less than 10000. 3 Tier
+  Scenario Outline: Orders are less than 10000. Three tiers with the last tier with no max count limit.
     Given I have the following tier pricing
       | min_volume | max_volume | price |
       | 1          | 100        | 10.00 |
       | 101        | 1000       | 5.00  |
       | 1001       |            | 2.50  |
-    And there are 2970 orders delivered
+    And there are 2970 orders
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
     And the total billable price is 10425.00
@@ -73,14 +73,14 @@ Feature: Tier Pricing Calculator
 
 
     
-  Scenario Outline: Orders delivered is greater than 10000. 4 Tier
+  Scenario Outline: Orders are greater than 10000. Four tiers with the last tier with no max count limit.
     Given I have the following tier pricing
       | min_volume | max_volume | price |
       | 1          | 100        | 10.00 |
       | 101        | 1000       | 5.00  |
       | 1001       | 10000      | 2.50  |
       | 10001      |            | 1.50  |
-    And there are 12970 orders delivered
+    And there are 12970 orders
     When I compute the amount to be billed
     Then the customer will be billed <tier_cost> per tier for <billable_orders> orders starting from <billing_start> to <billing_end> and the total cost will be <running_cost>
     And the total billable price is 32455.00
