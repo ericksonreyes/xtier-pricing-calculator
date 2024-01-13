@@ -35,7 +35,7 @@ $query = $db->query("SELECT COUNT(`id`) as 'order_count' FROM `orders` WHERE `se
 $itemCount = intval($query['order_count']);
 
 // Compute the tier pricing
-$result = $calculator->compute($this->volume);
+$result = $calculator->compute($itemCount);
 
 // Process the result
 foreach ($result->breakdown() as $resultItem) {
